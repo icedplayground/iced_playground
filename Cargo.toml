@@ -1,13 +1,13 @@
-# 🧊 iced_hello_app
+# 🧊 iced_playground
 [package]
-name = "iced_hello_app"
+name = "iced_playground"
 version = "0.1.0"
 edition = "2024"
 
 # cargo-bundle
 [package.metadata.bundle]
-name = "HELLO"
-identifier = "app.sleet.hello"
+name = "PLAYGROUND"
+identifier = "app.sleet.playground"
 icon = ["icons/icon.icns"]
 version = "0.1.0"
 copyright = "COPYRIGHT (c) 2025 SLEET.NEAR"
