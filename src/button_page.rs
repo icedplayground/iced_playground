@@ -54,10 +54,9 @@ impl ButtonPage {
         // button_content
         let button_content = column![
             text("BUTTON").size(24),
-            text("This page demonstrates the button widget in Iced.").size(16),
             buttons,
             text(format!(
-                "Button pressed {} times",
+                "BUTTON PRESSED {} TIMES",
                 self.button_pressed_count
             ))
             .size(16),

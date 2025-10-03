@@ -9,8 +9,7 @@ pub enum Message {}
 pub fn view() -> Element<'static, Message> {
 
     let text_content = column![
-        text("Hello World Page").size(24),
-        text("This page demonstrates the text widget in Iced.").size(16),
+        text("TEXT").size(24),
         text("Hello, World!").size(18)
     ]
     .spacing(10)

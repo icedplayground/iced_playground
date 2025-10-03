@@ -91,10 +91,10 @@ impl IcedPlayground {
         use iced::widget::{button, column, text};
 
         let nav_items = [
-            (NavItem::Home, "IcedPlayground"),
-            (NavItem::Text, "Hello World"),
-            (NavItem::Button, "Button"),
-            (NavItem::Counter, "Counter"),
+            (NavItem::Home, "HOME"),
+            (NavItem::Text, "TEXT"),
+            (NavItem::Button, "BUTTON"),
+            (NavItem::Counter, "COUNTER"),
         ];
 
         let mut sidebar_col = column!().spacing(5);
