@@ -33,9 +33,9 @@ impl CounterPage {
 
     pub fn view(&self) -> Element<'_, Message> {
         let counter_buttons = row![
-            button(text("+")).on_press(Message::Increment).padding(15),
+            button(text("-")).on_press(Message::Decrement).padding(15),
             text(self.count).size(50),
-            button(text("-")).on_press(Message::Decrement).padding(15)
+            button(text("+")).on_press(Message::Increment).padding(15),
         ]
         .spacing(15)
         .align_y(iced::Alignment::Center);
