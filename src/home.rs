@@ -1,6 +1,6 @@
 // 🧊 iced_playground
 // src/home.rs
-use iced::widget::{column, container, text, vertical_space};
+use iced::widget::{column, container, text};
 use iced::{Element, Length};
 
 #[derive(Debug, Clone)]
@@ -9,9 +9,7 @@ pub enum Message {}
 pub fn view() -> Element<'static, Message> {
     let home_content = column![
         text("Welcome to Iced Playground").size(24),
-        vertical_space(),
         text("This is the home page of your Iced application.").size(16),
-        vertical_space(),
         text("Use the sidebar to navigate to different examples:").size(14),
         text("- Hello World: Shows a text widget example").size(14),
         text("- Button: Shows a button widget example").size(14),

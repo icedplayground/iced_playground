@@ -1,6 +1,6 @@
 // 🧊 iced_playground
 // src/text_page.rs
-use iced::widget::{column, container, text, vertical_space};
+use iced::widget::{column, container, text};
 use iced::{Element, Length};
 
 #[derive(Debug, Clone)]
@@ -15,11 +15,8 @@ fn view() -> Element<'static, Message> {
 
     let text_content = column![
         text("Hello World Page").size(24),
-        vertical_space(),
         text("This page demonstrates the text widget in Iced.").size(16),
-        vertical_space(),
         text("Hello, World!").size(18),
-        vertical_space(),
         text("Code Example:").size(18),
         text(code_block).size(12),
     ]

@@ -1,6 +1,6 @@
 // 🧊 iced_playground
 // src/counter_page.rs
-use iced::widget::{button, column, container, text, vertical_space};
+use iced::widget::{button, column, container, text};
 use iced::{Element, Length};
 
 #[derive(Debug, Clone)]
@@ -43,16 +43,12 @@ let counter = column![
 
         let counter_content = column![
             text("Counter Page").size(24),
-            vertical_space(),
             text("This page demonstrates a counter using Iced widgets.").size(16),
-            vertical_space(),
-            text(self.count).size(50),
-            vertical_space(),
             button(text("+"))
                 .on_press(Message::Increment),
+            text(self.count).size(50),
             button(text("-"))
                 .on_press(Message::Decrement),
-            vertical_space(),
             text("Code Example:").size(18),
             text(code_block).size(12),
         ]

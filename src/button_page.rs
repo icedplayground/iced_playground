@@ -1,6 +1,6 @@
 // 🧊 iced_playground
 // src/button_page.rs
-use iced::widget::{button, column, container, text, vertical_space};
+use iced::widget::{button, column, container, text};
 use iced::{Element, Length};
 
 #[derive(Debug, Clone)]
@@ -37,14 +37,10 @@ let button = button(text("Click me!"))
 
         let button_content = column![
             text("Button Page").size(24),
-            vertical_space(),
             text("This page demonstrates the button widget in Iced.").size(16),
-            vertical_space(),
             button(text("Click me!"))
                 .on_press(Message::ButtonPressed),
-            vertical_space(),
             text(format!("Button pressed {} times", self.button_pressed_count)).size(16),
-            vertical_space(),
             text("Code Example:").size(18),
             text(code_block).size(12),
         ]
