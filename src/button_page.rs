@@ -30,13 +30,19 @@ impl ButtonPage {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
-
         let button_content = column![
-            text("Button Page").size(24),
+            text("BUTTON").size(24),
             text("This page demonstrates the button widget in Iced.").size(16),
-            button(text("Click me!"))
-                .on_press(Message::ButtonPressed),
-            text(format!("Button pressed {} times", self.button_pressed_count)).size(16),
+            button(text("PRIMARY")).style(iced::widget::button::primary).on_press(Message::ButtonPressed),
+            button(text("SECONDARY")).style(iced::widget::button::secondary).on_press(Message::ButtonPressed),
+            button(text("DANGER")).style(iced::widget::button::danger).on_press(Message::ButtonPressed),
+            button(text("SUCCESS")).style(iced::widget::button::success).on_press(Message::ButtonPressed),
+            button(text("TEXT")).style(iced::widget::button::text).on_press(Message::ButtonPressed),
+            text(format!(
+                "Button pressed {} times",
+                self.button_pressed_count
+            ))
+            .size(16),
         ]
         .spacing(10)
         .align_x(iced::Alignment::Center);
