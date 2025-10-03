@@ -1,0 +1,25 @@
+# 🧊 iced_hello_app
+[package]
+name = "iced_hello_app"
+version = "0.1.0"
+edition = "2024"
+
+# cargo-bundle
+[package.metadata.bundle]
+name = "HELLO"
+identifier = "app.sleet.hello"
+icon = ["icons/icon.icns"]
+version = "0.1.0"
+copyright = "COPYRIGHT (c) 2025 SLEET.NEAR"
+category = "public.app-category.utilities"
+short_description = "a hello iced project by sleet"
+
+
+# dependencies
+[dependencies]
+iced = "0.13.1"
+
+
+
+# ==================================
+# copyright 2025 by nonresistant.near
