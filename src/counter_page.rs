@@ -32,14 +32,6 @@ impl CounterPage {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
-        let code_block = r#"use iced::widget::{button, column, text};
-
-let counter = column![
-    text(self.count).size(50),
-    button(text("+")).on_press(Message::Increment),
-    button(text("-")).on_press(Message::Decrement),
-]
-.spacing(10);"#;
 
         let counter_content = column![
             text("Counter Page").size(24),
@@ -48,9 +40,7 @@ let counter = column![
                 .on_press(Message::Increment),
             text(self.count).size(50),
             button(text("-"))
-                .on_press(Message::Decrement),
-            text("Code Example:").size(18),
-            text(code_block).size(12),
+                .on_press(Message::Decrement)
         ]
         .spacing(10)
         .align_x(iced::Alignment::Center);

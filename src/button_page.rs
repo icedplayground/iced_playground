@@ -30,10 +30,6 @@ impl ButtonPage {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
-        let code_block = r#"use iced::widget::button;
-
-let button = button(text("Click me!"))
-    .on_press(Message::ButtonPressed);"#;
 
         let button_content = column![
             text("Button Page").size(24),
@@ -41,8 +37,6 @@ let button = button(text("Click me!"))
             button(text("Click me!"))
                 .on_press(Message::ButtonPressed),
             text(format!("Button pressed {} times", self.button_pressed_count)).size(16),
-            text("Code Example:").size(18),
-            text(code_block).size(12),
         ]
         .spacing(10)
         .align_x(iced::Alignment::Center);
