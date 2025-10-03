@@ -1,5 +1,5 @@
 // 🧊 iced_playground
-// src/text_page.rs
+// src/pages/text_page.rs
 use iced::widget::{column, container, row, text};
 use iced::{ Element, Length};
 
@@ -37,3 +37,7 @@ pub fn view() -> Element<'static, Message> {
         .center_y(Length::Fill)
         .into()
 }
+
+
+// ==================================
+// copyright 2025 by nonresistant.near

@@ -1,5 +1,5 @@
 // 🧊 iced_playground
-// src/button_page.rs
+// src/pages/button_page.rs
 use iced::widget::{button, column, container, row, text};
 use iced::{Element, Length};
 
@@ -73,3 +73,8 @@ impl ButtonPage {
             .into()
     }
 }
+
+
+
+// ==================================
+// copyright 2025 by nonresistant.near

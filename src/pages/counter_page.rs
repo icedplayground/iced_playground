@@ -1,5 +1,5 @@
 // 🧊 iced_playground
-// src/counter_page.rs
+// src/pages/counter_page.rs
 use iced::widget::{button, column, container, row, text};
 use iced::{Element, Length};
 
@@ -53,3 +53,7 @@ impl CounterPage {
             .into()
     }
 }
+
+
+// ==================================
+// copyright 2025 by nonresistant.near
