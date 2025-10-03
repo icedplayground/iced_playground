@@ -1,49 +1,132 @@
-// 🧊 iced_playground
+// 🧊 iced playgrount
 // src/main.rs
+mod home;
+mod text_page;
+mod button_page;
+mod counter_page;
+
 use iced::application;
-use iced::widget::{center, text};
+use iced::widget::{container, row};
 use iced::{Element, Result, Task};
 
-// ============================== //
-
-// fn main
-fn main() -> Result {
-    application(
-        MY_ICED_HELLO_WORLD_STRUCT::title,
-        MY_ICED_HELLO_WORLD_STRUCT::update,
-        MY_ICED_HELLO_WORLD_STRUCT::view,
-    )
-    .run_with(|| (MY_ICED_HELLO_WORLD_STRUCT::default(), Task::none()))
+#[derive(Debug, Clone)]
+pub enum Message {
+    Navigation(NavItem),
+    CounterPage(counter_page::Message),
+    ButtonPage(button_page::Message),
 }
 
-// ============================== //
-// iced magic happens here
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum NavItem {
+    Home,
+    Text,
+    Button,
+    Counter,
+}
 
-// struct - important for state
-#[allow(non_camel_case_types)]
-#[derive(Default)]
-struct MY_ICED_HELLO_WORLD_STRUCT;
+pub struct IcedPlayground {
+    current_page: NavItem,
+    counter_page: counter_page::CounterPage,
+    button_page: button_page::ButtonPage,
+}
 
-// enum
-// The message defines any events or interactions that your program will care about.
-#[derive(Debug, Clone, Copy)]
-enum Message {}
+impl Default for IcedPlayground {
+    fn default() -> Self {
+        Self {
+            current_page: NavItem::Home,
+            counter_page: counter_page::CounterPage::default(),
+            button_page: button_page::ButtonPage::default(),
+        }
+    }
+}
 
-// impl
-impl MY_ICED_HELLO_WORLD_STRUCT {
-    // fn title
+fn main() -> Result {
+    application(
+        IcedPlayground::title,
+        IcedPlayground::update,
+        IcedPlayground::view,
+    )
+    .run_with(|| (IcedPlayground::default(), Task::none()))
+}
+
+impl IcedPlayground {
     fn title(&self) -> String {
-        String::from("👋 Iced • Hello")
+        String::from("Iced Playground")
     }
 
-    // fn update
-    fn update(&mut self, _message: Message) -> Task<Message> {
-        Task::none()
+    fn update(&mut self, message: Message) -> Task<Message> {
+        match message {
+            Message::Navigation(nav_item) => {
+                self.current_page = nav_item;
+                Task::none()
+            }
+            Message::CounterPage(msg) => {
+                self.counter_page.update(msg);
+                Task::none()
+            }
+            Message::ButtonPage(msg) => {
+                self.button_page.update(msg);
+                Task::none()
+            }
+        }
     }
 
-    // fn view
     fn view(&self) -> Element<'_, Message> {
-        center(text("Hello, world!")).into()
+        let sidebar = self.sidebar_view();
+        let content = self.content_view();
+
+        let layout = row![sidebar, content]
+            .spacing(10)
+            .padding(10)
+            .height(iced::Length::Fill)
+            .width(iced::Length::Fill);
+
+        container(layout)
+            .height(iced::Length::Fill)
+            .width(iced::Length::Fill)
+            .into()
+    }
+
+    fn sidebar_view(&self) -> Element<'_, Message> {
+        use iced::widget::{button, column, text};
+
+        let nav_items = [
+            (NavItem::Home, "IcedPlayground"),
+            (NavItem::Text, "Hello World"),
+            (NavItem::Button, "Button"),
+            (NavItem::Counter, "Counter"),
+        ];
+
+        let mut sidebar_col = column!().spacing(5);
+
+        for (nav_item, label) in nav_items {
+            let btn = button(text(label))
+                .width(iced::Length::Fill)
+                .on_press(Message::Navigation(nav_item));
+
+            // Highlight the active page
+            let btn = if self.current_page == nav_item {
+                btn.style(iced::widget::button::primary)
+            } else {
+                btn
+            };
+
+            sidebar_col = sidebar_col.push(btn);
+        }
+
+        container(sidebar_col)
+            .width(iced::Length::Fixed(150.0))
+            .padding(10)
+            .into()
+    }
+
+    fn content_view(&self) -> Element<'_, Message> {
+        match self.current_page {
+            NavItem::Home => home::view().map(|_| Message::Navigation(NavItem::Home)),
+            NavItem::Text => text_page::view().map(|_| Message::Navigation(NavItem::Text)),
+            NavItem::Button => self.button_page.view().map(Message::ButtonPage),
+            NavItem::Counter => self.counter_page.view().map(Message::CounterPage),
+        }
     }
 }
 
