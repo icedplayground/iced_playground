@@ -1,4 +1,4 @@
-// 🧊 iced_hello_app
+// 🧊 iced_playground
 // src/main.rs
 use iced::application;
 use iced::widget::{center, text};

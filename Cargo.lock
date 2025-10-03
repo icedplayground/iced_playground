@@ -1439,7 +1439,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iced_hello_app"
+name = "iced_playground"
 version = "0.1.0"
 dependencies = [
  "iced",
