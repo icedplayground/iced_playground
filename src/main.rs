@@ -1,13 +1,36 @@
 // 🧊 iced playgrount
 // src/main.rs
-mod home;
-mod text_page;
-mod button_page;
-mod counter_page;
 
+// use iced
 use iced::application;
 use iced::widget::{container, row};
 use iced::{Element, Result, Task};
+
+// mod pages
+mod pages {
+pub mod home;
+pub mod text_page;
+pub mod button_page;
+pub mod counter_page;
+}
+// use pages
+use pages::home;
+use pages::text_page;
+use pages::button_page;
+use pages::counter_page;
+
+
+// fn main
+fn main() -> Result {
+    application(
+        IcedPlayground::title,
+        IcedPlayground::update,
+        IcedPlayground::view,
+    )
+    .run_with(|| (IcedPlayground::default(), Task::none()))
+}
+
+// ==========================
 
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -40,14 +63,6 @@ impl Default for IcedPlayground {
     }
 }
 
-fn main() -> Result {
-    application(
-        IcedPlayground::title,
-        IcedPlayground::update,
-        IcedPlayground::view,
-    )
-    .run_with(|| (IcedPlayground::default(), Task::none()))
-}
 
 impl IcedPlayground {
     fn title(&self) -> String {
