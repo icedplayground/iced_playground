@@ -1,6 +1,6 @@
 // 🧊 iced_playground
 // src/button_page.rs
-use iced::widget::{button, column, container, text};
+use iced::widget::{button, column, container, row, text};
 use iced::{Element, Length};
 
 #[derive(Debug, Clone)]
@@ -30,14 +30,32 @@ impl ButtonPage {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
+        
+        // buttons
+        let buttons = row![
+            button(text("PRIMARY"))
+                .style(iced::widget::button::primary)
+                .on_press(Message::ButtonPressed),
+            button(text("SECONDARY"))
+                .style(iced::widget::button::secondary)
+                .on_press(Message::ButtonPressed),
+            button(text("DANGER"))
+                .style(iced::widget::button::danger)
+                .on_press(Message::ButtonPressed),
+            button(text("SUCCESS"))
+                .style(iced::widget::button::success)
+                .on_press(Message::ButtonPressed),
+            button(text("TEXT"))
+                .style(iced::widget::button::text)
+                .on_press(Message::ButtonPressed),
+        ]
+        .spacing(10);
+
+        // button_content
         let button_content = column![
             text("BUTTON").size(24),
             text("This page demonstrates the button widget in Iced.").size(16),
-            button(text("PRIMARY")).style(iced::widget::button::primary).on_press(Message::ButtonPressed),
-            button(text("SECONDARY")).style(iced::widget::button::secondary).on_press(Message::ButtonPressed),
-            button(text("DANGER")).style(iced::widget::button::danger).on_press(Message::ButtonPressed),
-            button(text("SUCCESS")).style(iced::widget::button::success).on_press(Message::ButtonPressed),
-            button(text("TEXT")).style(iced::widget::button::text).on_press(Message::ButtonPressed),
+            buttons,
             text(format!(
                 "Button pressed {} times",
                 self.button_pressed_count
