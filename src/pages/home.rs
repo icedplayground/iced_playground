@@ -8,7 +8,7 @@ pub enum Message {}
 
 pub fn view() -> Element<'static, Message> {
     let home_content = column![
-        text("ICED PLAYGROUND").size(24)
+        text("ICED PLAYGROUND").size(24).style(text::primary)
     ]
     .spacing(10)
     .align_x(iced::Alignment::Center);
