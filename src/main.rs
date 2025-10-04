@@ -102,10 +102,10 @@ impl IcedPlayground {
     }
 
     fn view(&self) -> Element<'_, Message> {
-        let sidebar = self.sidebar_view();
+        let navigation = self.navigation_view();
         let content = self.content_view();
 
-        let layout = row![sidebar, content]
+        let layout = iced::widget::column![navigation, content]
             .spacing(10)
             .padding(10)
             .height(iced::Length::Fill)
@@ -117,8 +117,8 @@ impl IcedPlayground {
             .into()
     }
 
-    fn sidebar_view(&self) -> Element<'_, Message> {
-        use iced::widget::{button, column, text};
+    fn navigation_view(&self) -> Element<'_, Message> {
+        use iced::widget::{button, row, text, horizontal_space};
 
         let nav_items = [
             (NavItem::Home, "HOME"),
@@ -128,11 +128,10 @@ impl IcedPlayground {
             (NavItem::Theme, "THEME"),
         ];
 
-        let mut sidebar_col = column!().spacing(5);
+        let mut navigation_row = row!().spacing(5);
 
         for (nav_item, label) in nav_items {
             let btn = button(text(label))
-                .width(iced::Length::Fill)
                 .on_press(Message::Navigation(nav_item));
 
             // Highlight the active page
@@ -142,12 +141,20 @@ impl IcedPlayground {
                 btn
             };
 
-            sidebar_col = sidebar_col.push(btn);
+            navigation_row = navigation_row.push(btn);
         }
 
-        container(sidebar_col)
-            .width(iced::Length::Fixed(150.0))
+        // Center the row using horizontal spaces on both sides
+        let centered_row = row![
+            horizontal_space(),
+            navigation_row,
+            horizontal_space(),
+        ]
+        .width(iced::Length::Fill);
+
+        container(centered_row)
             .padding(10)
+            .width(iced::Length::Fill)
             .into()
     }
 
