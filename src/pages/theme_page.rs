@@ -115,6 +115,14 @@ fn get_theme_options() -> Vec<ThemeOption> {
             name: "Nightfly".to_string(),
             theme: Theme::Nightfly,
         },
+        ThemeOption {
+            name: "Oxocarbon".to_string(),
+            theme: Theme::Oxocarbon,
+        },
+        ThemeOption {
+            name: "Ferra".to_string(),
+            theme: Theme::Ferra,
+        },
     ]
 }
 
