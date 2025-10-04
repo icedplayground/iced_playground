@@ -4,7 +4,7 @@
 // use iced
 use iced::application;
 use iced::widget::{container, row};
-use iced::{Element, Result, Task};
+use iced::{Element, Result, Task, Theme};
 
 // mod pages
 mod pages {
@@ -30,7 +30,7 @@ fn main() -> Result {
         IcedPlayground::update,
         IcedPlayground::view,
     )
-    .theme(|_| iced::Theme::Dark)  // Default theme
+    .theme(|state: &IcedPlayground| state.current_theme.clone())
     .run_with(|| (IcedPlayground::default(), Task::none()))
 }
 
@@ -55,6 +55,7 @@ pub enum NavItem {
 
 pub struct IcedPlayground {
     current_page: NavItem,
+    current_theme: Theme,
     counter_page: counter_page::CounterPage,
     button_page: button_page::ButtonPage,
     theme_page: theme_page::ThemePage,
@@ -64,6 +65,7 @@ impl Default for IcedPlayground {
     fn default() -> Self {
         Self {
             current_page: NavItem::Home,
+            current_theme: Theme::Dark,
             counter_page: counter_page::CounterPage::default(),
             button_page: button_page::ButtonPage::default(),
             theme_page: theme_page::ThemePage::default(),
@@ -91,10 +93,9 @@ impl IcedPlayground {
                 self.button_page.update(msg);
                 Task::none()
             }
-            Message::ThemePage(msg) => {
-                // The theme page handles its own state
-                // For actual theme changes to take effect, the application would need to be restarted
-                self.theme_page.update(msg);
+            Message::ThemePage(theme_page::Message::ThemeSelected(theme)) => {
+                self.current_theme = theme.clone();
+                self.theme_page.update(theme_page::Message::ThemeSelected(theme.clone()));
                 Task::none()
             }
         }
