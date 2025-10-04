@@ -8,16 +8,19 @@ use iced::{Element, Result, Task};
 
 // mod pages
 mod pages {
-pub mod home;
-pub mod text_page;
-pub mod button_page;
-pub mod counter_page;
+    pub mod home;
+    pub mod text_page;
+    pub mod button_page;
+    pub mod counter_page;
+    pub mod theme_page;
 }
+
 // use pages
 use pages::home;
 use pages::text_page;
 use pages::button_page;
 use pages::counter_page;
+use pages::theme_page;
 
 
 // fn main
@@ -27,6 +30,7 @@ fn main() -> Result {
         IcedPlayground::update,
         IcedPlayground::view,
     )
+    .theme(|_| iced::Theme::Dark)  // Default theme
     .run_with(|| (IcedPlayground::default(), Task::none()))
 }
 
@@ -37,6 +41,7 @@ pub enum Message {
     Navigation(NavItem),
     CounterPage(counter_page::Message),
     ButtonPage(button_page::Message),
+    ThemePage(theme_page::Message),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -45,12 +50,14 @@ pub enum NavItem {
     Text,
     Button,
     Counter,
+    Theme,
 }
 
 pub struct IcedPlayground {
     current_page: NavItem,
     counter_page: counter_page::CounterPage,
     button_page: button_page::ButtonPage,
+    theme_page: theme_page::ThemePage,
 }
 
 impl Default for IcedPlayground {
@@ -59,6 +66,7 @@ impl Default for IcedPlayground {
             current_page: NavItem::Home,
             counter_page: counter_page::CounterPage::default(),
             button_page: button_page::ButtonPage::default(),
+            theme_page: theme_page::ThemePage::default(),
         }
     }
 }
@@ -81,6 +89,12 @@ impl IcedPlayground {
             }
             Message::ButtonPage(msg) => {
                 self.button_page.update(msg);
+                Task::none()
+            }
+            Message::ThemePage(msg) => {
+                // The theme page handles its own state
+                // For actual theme changes to take effect, the application would need to be restarted
+                self.theme_page.update(msg);
                 Task::none()
             }
         }
@@ -110,6 +124,7 @@ impl IcedPlayground {
             (NavItem::Text, "TEXT"),
             (NavItem::Button, "BUTTON"),
             (NavItem::Counter, "COUNTER"),
+            (NavItem::Theme, "THEME"),
         ];
 
         let mut sidebar_col = column!().spacing(5);
@@ -141,6 +156,7 @@ impl IcedPlayground {
             NavItem::Text => text_page::view().map(|_| Message::Navigation(NavItem::Text)),
             NavItem::Button => self.button_page.view().map(Message::ButtonPage),
             NavItem::Counter => self.counter_page.view().map(Message::CounterPage),
+            NavItem::Theme => self.theme_page.view().map(Message::ThemePage),
         }
     }
 }
