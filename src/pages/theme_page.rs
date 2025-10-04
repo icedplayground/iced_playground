@@ -1,7 +1,20 @@
 // 🧊 iced_playground
 // src/pages/theme_page.rs
-use iced::widget::{button, column, container, text, row};
+use iced::widget::{column, container, text, pick_list};
 use iced::{Element, Length, Theme};
+
+// Define a helper type to represent theme options with their display labels
+#[derive(Debug, Clone, PartialEq)]
+pub struct ThemeOption {
+    pub name: String,
+    pub theme: Theme,
+}
+
+impl std::fmt::Display for ThemeOption {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.name)
+    }
+}
 
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -18,6 +31,31 @@ impl Default for ThemePage {
             current_theme: Theme::Dark,
         }
     }
+}
+
+fn get_theme_options() -> Vec<ThemeOption> {
+    vec![
+        ThemeOption { name: "Light".to_string(), theme: Theme::Light },
+        ThemeOption { name: "Dark".to_string(), theme: Theme::Dark },
+        ThemeOption { name: "Dracula".to_string(), theme: Theme::Dracula },
+        ThemeOption { name: "Nord".to_string(), theme: Theme::Nord },
+        ThemeOption { name: "Solarized Light".to_string(), theme: Theme::SolarizedLight },
+        ThemeOption { name: "Solarized Dark".to_string(), theme: Theme::SolarizedDark },
+        ThemeOption { name: "Gruvbox Light".to_string(), theme: Theme::GruvboxLight },
+        ThemeOption { name: "Gruvbox Dark".to_string(), theme: Theme::GruvboxDark },
+        ThemeOption { name: "Catppuccin Latte".to_string(), theme: Theme::CatppuccinLatte },
+        ThemeOption { name: "Catppuccin Frappe".to_string(), theme: Theme::CatppuccinFrappe },
+        ThemeOption { name: "Catppuccin Macchiato".to_string(), theme: Theme::CatppuccinMacchiato },
+        ThemeOption { name: "Catppuccin Mocha".to_string(), theme: Theme::CatppuccinMocha },
+        ThemeOption { name: "Tokyo Night".to_string(), theme: Theme::TokyoNight },
+        ThemeOption { name: "Tokyo Night Storm".to_string(), theme: Theme::TokyoNightStorm },
+        ThemeOption { name: "Tokyo Night Light".to_string(), theme: Theme::TokyoNightLight },
+        ThemeOption { name: "Kanagawa Wave".to_string(), theme: Theme::KanagawaWave },
+        ThemeOption { name: "Kanagawa Dragon".to_string(), theme: Theme::KanagawaDragon },
+        ThemeOption { name: "Kanagawa Lotus".to_string(), theme: Theme::KanagawaLotus },
+        ThemeOption { name: "Moonfly".to_string(), theme: Theme::Moonfly },
+        ThemeOption { name: "Nightfly".to_string(), theme: Theme::Nightfly },
+    ]
 }
 
 impl ThemePage {
@@ -38,47 +76,21 @@ impl ThemePage {
             .width(Length::Fill)
             .center_x(Length::Fill);
         
-        let theme_buttons = column![
-            row![
-                theme_button("Light", Theme::Light),
-                theme_button("Dark", Theme::Dark),
-                theme_button("Dracula", Theme::Dracula),
-                theme_button("Nord", Theme::Nord),
-            ]
-            .spacing(10),
-            row![
-                theme_button("Solarized Light", Theme::SolarizedLight),
-                theme_button("Solarized Dark", Theme::SolarizedDark),
-                theme_button("GruvboxLight", Theme::GruvboxLight),
-                theme_button("GruvboxDark", Theme::GruvboxDark),
-            ]
-            .spacing(10),
-            row![
-                theme_button("Catppuccin Latte", Theme::CatppuccinLatte),
-                theme_button("Catppuccin Frappe", Theme::CatppuccinFrappe),
-                theme_button("Catppuccin Macchiato", Theme::CatppuccinMacchiato),
-                theme_button("Catppuccin Mocha", Theme::CatppuccinMocha),
-            ]
-            .spacing(10),
-            row![
-                theme_button("Tokyo Night", Theme::TokyoNight),
-                theme_button("Tokyo Night Storm", Theme::TokyoNightStorm),
-                theme_button("Tokyo Night Light", Theme::TokyoNightLight),
-                theme_button("Kanagawa Wave", Theme::KanagawaWave),
-            ]
-            .spacing(10),
-            row![
-                theme_button("Kanagawa Dragon", Theme::KanagawaDragon),
-                theme_button("Kanagawa Lotus", Theme::KanagawaLotus),
-                theme_button("Moonfly", Theme::Moonfly),
-                theme_button("Nightfly", Theme::Nightfly),
-            ]
-            .spacing(10)
-        ]
-        .spacing(10);
+        let theme_options = get_theme_options();
+        let current_theme_option = theme_options.iter()
+            .find(|option| option.theme == self.current_theme)
+            .cloned()
+            .unwrap_or_else(|| ThemeOption { name: "Dark".to_string(), theme: Theme::Dark });
         
-        let centered_buttons = container(theme_buttons)
-            .width(Length::Shrink)
+        let theme_picker = pick_list(
+            theme_options,
+            Some(current_theme_option),
+            |theme_option| Message::ThemeSelected(theme_option.theme),
+        )
+        .placeholder("Select a theme...");
+        
+        let centered_picker = container(theme_picker)
+            .width(Length::Fixed(200.0))
             .center_x(Length::Fill);
         
         let centered_current_theme = container(text(format!("Current chosen theme: {:?}", self.current_theme)).size(14))
@@ -88,7 +100,7 @@ impl ThemePage {
         let content = column![
             centered_title,
             centered_subtitle,
-            centered_buttons,
+            centered_picker,
             centered_current_theme
         ]
         .spacing(20)
@@ -104,10 +116,3 @@ impl ThemePage {
     }
 }
 
-fn theme_button(label: &str, theme: Theme) -> Element<'_, Message> {
-    button(text(label))
-        .width(Length::Fixed(150.0))
-        .padding(10)
-        .on_press(Message::ThemeSelected(theme))
-        .into()
-}
