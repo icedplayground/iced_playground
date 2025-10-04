@@ -30,7 +30,7 @@ impl ThemePage {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
-        let centered_title = container(text("Theme Selection").size(24))
+        let centered_title = container(text("THEME").size(24))
             .width(Length::Fill)
             .center_x(Length::Fill);
         
