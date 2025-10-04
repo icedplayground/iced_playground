@@ -30,21 +30,43 @@ impl ThemePage {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
-        let theme_buttons = row![
-            theme_button("Light", Theme::Light),
-            theme_button("Dark", Theme::Dark),
-            theme_button("Dracula", Theme::Dracula),
-            theme_button("Nord", Theme::Nord),
-            theme_button("Solarized Light", Theme::SolarizedLight),
-            theme_button("Solarized Dark", Theme::SolarizedDark),
+        let centered_title = container(text("Theme Selection").size(24))
+            .width(Length::Fill)
+            .center_x(Length::Fill);
+        
+        let centered_subtitle = container(text("Select a theme for the application:").size(16))
+            .width(Length::Fill)
+            .center_x(Length::Fill);
+        
+        let theme_buttons = column![
+            row![
+                theme_button("Light", Theme::Light),
+                theme_button("Dark", Theme::Dark),
+                theme_button("Dracula", Theme::Dracula),
+            ]
+            .spacing(10),
+            row![
+                theme_button("Nord", Theme::Nord),
+                theme_button("Solarized Light", Theme::SolarizedLight),
+                theme_button("Solarized Dark", Theme::SolarizedDark),
+            ]
+            .spacing(10)
         ]
         .spacing(10);
+        
+        let centered_buttons = container(theme_buttons)
+            .width(Length::Shrink)
+            .center_x(Length::Fill);
+        
+        let centered_current_theme = container(text(format!("Current chosen theme: {:?}", self.current_theme)).size(14))
+            .width(Length::Fill)
+            .center_x(Length::Fill);
 
         let content = column![
-            text("Theme Selection").size(24),
-            text("Select a theme for the application:").size(16),
-            theme_buttons,
-            text(format!("Current chosen theme: {:?}", self.current_theme)).size(14)
+            centered_title,
+            centered_subtitle,
+            centered_buttons,
+            centered_current_theme
         ]
         .spacing(20)
         .padding(20)
