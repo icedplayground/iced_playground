@@ -43,12 +43,35 @@ impl ThemePage {
                 theme_button("Light", Theme::Light),
                 theme_button("Dark", Theme::Dark),
                 theme_button("Dracula", Theme::Dracula),
+                theme_button("Nord", Theme::Nord),
             ]
             .spacing(10),
             row![
-                theme_button("Nord", Theme::Nord),
                 theme_button("Solarized Light", Theme::SolarizedLight),
                 theme_button("Solarized Dark", Theme::SolarizedDark),
+                theme_button("GruvboxLight", Theme::GruvboxLight),
+                theme_button("GruvboxDark", Theme::GruvboxDark),
+            ]
+            .spacing(10),
+            row![
+                theme_button("Catppuccin Latte", Theme::CatppuccinLatte),
+                theme_button("Catppuccin Frappe", Theme::CatppuccinFrappe),
+                theme_button("Catppuccin Macchiato", Theme::CatppuccinMacchiato),
+                theme_button("Catppuccin Mocha", Theme::CatppuccinMocha),
+            ]
+            .spacing(10),
+            row![
+                theme_button("Tokyo Night", Theme::TokyoNight),
+                theme_button("Tokyo Night Storm", Theme::TokyoNightStorm),
+                theme_button("Tokyo Night Light", Theme::TokyoNightLight),
+                theme_button("Kanagawa Wave", Theme::KanagawaWave),
+            ]
+            .spacing(10),
+            row![
+                theme_button("Kanagawa Dragon", Theme::KanagawaDragon),
+                theme_button("Kanagawa Lotus", Theme::KanagawaLotus),
+                theme_button("Moonfly", Theme::Moonfly),
+                theme_button("Nightfly", Theme::Nightfly),
             ]
             .spacing(10)
         ]
