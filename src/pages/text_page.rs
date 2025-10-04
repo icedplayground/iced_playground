@@ -8,12 +8,12 @@ pub enum Message {}
 
 pub fn view() -> Element<'static, Message> {
     // Define different text styles using colors
-    let base_text = text("BASE").size(16).style(iced::widget::text::base);
-    let danger_text = text("DANGER").size(16).style(iced::widget::text::danger);
-    let default_text = text("DEFAULT").size(16).style(iced::widget::text::default);
-    let primary_text = text("PRIMARY").size(16).style(iced::widget::text::primary);
-    let secondary_text = text("SECONDARY").size(16).style(iced::widget::text::secondary);
-    let success_text = text("SUCCESS").size(16).style(iced::widget::text::success);
+    let base_text = text("BASE").size(16).style(text::base);
+    let danger_text = text("DANGER").size(16).style(text::danger);
+    let default_text = text("DEFAULT").size(16).style(text::default);
+    let primary_text = text("PRIMARY").size(16).style(text::primary);
+    let secondary_text = text("SECONDARY").size(16).style(text::secondary);
+    let success_text = text("SUCCESS").size(16).style(text::success);
 
     let text_examples = row![
         base_text,

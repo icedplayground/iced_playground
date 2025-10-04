@@ -30,23 +30,22 @@ impl ButtonPage {
     }
 
     pub fn view(&self) -> Element<'_, Message> {
-        
         // buttons
         let buttons = row![
             button(text("PRIMARY"))
-                .style(iced::widget::button::primary)
+                .style(button::primary)
                 .on_press(Message::ButtonPressed),
             button(text("SECONDARY"))
-                .style(iced::widget::button::secondary)
+                .style(button::secondary)
                 .on_press(Message::ButtonPressed),
             button(text("DANGER"))
-                .style(iced::widget::button::danger)
+                .style(button::danger)
                 .on_press(Message::ButtonPressed),
             button(text("SUCCESS"))
-                .style(iced::widget::button::success)
+                .style(button::success)
                 .on_press(Message::ButtonPressed),
             button(text("TEXT"))
-                .style(iced::widget::button::text)
+                .style(button::text)
                 .on_press(Message::ButtonPressed),
         ]
         .spacing(10);
